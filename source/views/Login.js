@@ -1,4 +1,4 @@
-import { Dimensions, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Dimensions, ImageBackground, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import colors from '../colors/colors'
 import firebase from '../../firebaseConfig'
@@ -16,36 +16,38 @@ const Login = ({navigation}) => {
 	}
 
   return (
-    <KeyboardAvoidingView behavior='padding' style={styles.container}>
-      <View style={styles.loginWrapper}>
-        <Text style={styles.headerTitle}>Market List</Text>
-				<Text style={styles.text}>Welcome to the best market list for you and your family :)</Text>
+		<ImageBackground source={require('../images/loginBackground.jpg')} style={styles.backgroundImage}>
+    	<KeyboardAvoidingView behavior='padding' style={styles.container}>
+				<View style={styles.loginWrapper}>
+      	  <Text style={styles.headerTitle}>Market List</Text>
+					<Text style={styles.text}>Welcome to the best market list for you and your family :)</Text>
 
-				<TextInput 
-					style={styles.input}
-					placeholder='E-Mail'
-					placeholderTextColor={colors.white}
-					value={email}
-					onChangeText={(email) => setEmail(email)}
-				/>
-				
-				<TextInput 
-					style={[styles.input, {marginTop: 20}]}
-					placeholder='Password'
-					placeholderTextColor={colors.white}
-					value={password}
-					onChangeText={(password) => setPassword(password)}
-					secureTextEntry
-				/>
+					<TextInput 
+						style={styles.input}
+						placeholder='E-Mail'
+						placeholderTextColor={colors.white}
+						value={email}
+						onChangeText={(email) => setEmail(email)}
+					/>
 
-				<TouchableOpacity onPress={handleLogin} style={styles.loginButton}>
-					<Text style={styles.loginText}>Login</Text>
-				</TouchableOpacity>
-				<TouchableOpacity onPress={() => navigation.navigate('Register')} style={styles.registerButton}>
-					<Text style={styles.registerText}>Register</Text>
-				</TouchableOpacity>
-      </View>
-    </KeyboardAvoidingView>
+					<TextInput 
+						style={[styles.input, {marginTop: 20}]}
+						placeholder='Password'
+						placeholderTextColor={colors.white}
+						value={password}
+						onChangeText={(password) => setPassword(password)}
+						secureTextEntry
+					/>
+
+					<TouchableOpacity onPress={handleLogin} style={styles.loginButton}>
+						<Text style={styles.loginText}>Login</Text>
+					</TouchableOpacity>
+					<TouchableOpacity onPress={() => navigation.navigate('Register')} style={styles.registerButton}>
+						<Text style={styles.registerText}>Register</Text>
+					</TouchableOpacity>
+      	</View>
+    	</KeyboardAvoidingView>
+		</ImageBackground>
   )
 }
 
@@ -53,32 +55,36 @@ export default Login
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: colors.orange
+      flex: 1,
+			alignItems: 'center',
+      justifyContent: 'center',
     },
 
+		backgroundImage: {
+			width: width * 1,
+			height: height,
+		},
+
     loginWrapper: {
-        backgroundColor: colors.white,
-        width: width * 0.7,
-        height: height * 0.5,
-        shadowColor: "#000",
-        shadowOffset: {
-          width: 0,
-          height: 3,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
-        borderRadius: 20,
-        alignItems: 'center',
-        padding: 20
+      backgroundColor: colors.white,
+      width: width * 0.7,
+      height: height * 0.47,
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 3,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
+      borderRadius: 20,
+      alignItems: 'center',
+      padding: 20
     },
 
     headerTitle: {
-        fontSize: 32,
-        fontWeight: 'bold'
+      fontSize: 32,
+      fontWeight: 'bold'
     },
 
 		text: {
