@@ -16,12 +16,13 @@ const Register = ({navigation}) => {
 			firebase.auth().createUserWithEmailAndPassword(email, password)
 			.then(userCredentials => {
 				const user = userCredentials.user
-				const timestamp = firebase.firestore.FieldValue.serverTimestamp()
+				let date = new Date()
+				let registeredDate = (date.getFullYear() + '-' + ((date.getMonth())) + '-' + ((date.getDate())))
 				const data = {
 					email: email,
 					password: password,
 					username: username,
-					registeredAt: timestamp
+					registeredAt: registeredDate
 				}
 				usersRef
 				.add(data)

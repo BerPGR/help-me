@@ -31,12 +31,25 @@ const Login = ({navigation}) => {
 	}, [])
 
 	const handleLogin = () => {
+		let exist = false
+		let usuario = {}
+		for (let i = 0; i<users.length; i++) {
+			if (users[i].document.email == email && users[i].document.password == password) {
+				usuario = users[i]
+				exist = true
+			}
+		}
+		if (exist) {
 		firebase.auth().signInWithEmailAndPassword(email, password)
 		.then(userCredentials => {
 			const user = userCredentials.user
-			navigation.navigate('Home')
+			navigation.navigate('Home', {usuario: usuario})
 		})
 		.catch(error => alert(error.message))
+		}
+		else {
+			alert("This user doesn't exist")
+		}
 	}
 
   return (
