@@ -1,7 +1,7 @@
 import { Dimensions, ImageBackground, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import colors from '../colors/colors'
-import firebase from '../../firebaseConfig'
+import { firebase } from '../../firebaseConfig'
 
 const height = Dimensions.get('window').height
 const width = Dimensions.get('window').width
@@ -10,9 +10,33 @@ const Login = ({navigation}) => {
 
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
+	const [users, setUsers] = useState([])
+
+	const usersRef = firebase.firestore().collection('users')
+
+	useEffect(() => {
+		usersRef
+		.orderBy('registeredAt', 'asc')
+		.onSnapshot(querySnapchot => {
+			const users = []
+			querySnapchot.forEach(doc => {
+				const document = doc.data()
+				users.push({
+					id: doc.id,
+					document
+				})
+			})
+			setUsers(users)
+		})
+	}, [])
 
 	const handleLogin = () => {
-
+		firebase.auth().signInWithEmailAndPassword(email, password)
+		.then(userCredentials => {
+			const user = userCredentials.user
+			navigation.navigate('Home')
+		})
+		.catch(error => alert(error.message))
 	}
 
   return (
@@ -25,6 +49,7 @@ const Login = ({navigation}) => {
 					<TextInput 
 						style={styles.input}
 						placeholder='E-Mail'
+						autoCapitalize='none'
 						placeholderTextColor={colors.white}
 						value={email}
 						onChangeText={(email) => setEmail(email)}
@@ -33,6 +58,7 @@ const Login = ({navigation}) => {
 					<TextInput 
 						style={[styles.input, {marginTop: 20}]}
 						placeholder='Password'
+						autoCapitalize='none'
 						placeholderTextColor={colors.white}
 						value={password}
 						onChangeText={(password) => setPassword(password)}
