@@ -5,6 +5,7 @@ import { firebase } from '../../firebaseConfig'
 
 const Register = ({navigation}) => {
 	
+	const [name, setName] = useState('')
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [username, setUsername] = useState('')
@@ -12,13 +13,14 @@ const Register = ({navigation}) => {
 	const usersRef = firebase.firestore().collection('users')
 
 	const handleRegister = () => {
-		if (email && password && username) {
+		if (name && email && password && username) {
 			firebase.auth().createUserWithEmailAndPassword(email, password)
 			.then(userCredentials => {
 				const user = userCredentials.user
 				let date = new Date()
 				let registeredDate = (date.getFullYear() + '-' + ((date.getMonth())) + '-' + ((date.getDate())))
 				const data = {
+					name: name,
 					email: email,
 					password: password,
 					username: username,
@@ -57,6 +59,16 @@ const Register = ({navigation}) => {
 				</SafeAreaView>
 
 				<View style={styles.inputsWrapper}>
+					<Text style={styles.inputTitle}>Name</Text>
+					<TextInput 
+						placeholder='Name'
+						autoCapitalize='none'
+						placeholderTextColor={colors.white}
+						style={styles.input}
+						value={name}
+						onChangeText={(text) => setName(text)}
+					/>
+
 					<Text style={styles.inputTitle}>E-Mail</Text>
 					<TextInput 
 						placeholder='E-Mail'
