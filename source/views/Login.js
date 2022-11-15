@@ -16,7 +16,7 @@ const Login = ({navigation}) => {
 	}
 
   return (
-		<ImageBackground source={require('../images/loginBackground.jpg')} style={styles.backgroundImage}>
+		<ImageBackground source={require('../images/endless-constellation.png')} style={styles.backgroundImage}>
     	<KeyboardAvoidingView behavior='padding' style={styles.container}>
 				<View style={styles.loginWrapper}>
       	  <Text style={styles.headerTitle}>Market List</Text>
@@ -84,7 +84,8 @@ const styles = StyleSheet.create({
 
     headerTitle: {
       fontSize: 32,
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+			color: colors.purple
     },
 
 		text: {
@@ -110,20 +111,20 @@ const styles = StyleSheet.create({
 			width: width * 0.5,
 			borderRadius: 5,
 			borderWidth: 2,
-			borderColor: colors.orange
+			borderColor: colors.purple
 		},
 
 		loginText: {
 			fontSize: 15,
 			fontWeight: 'bold',
-			color: colors.orange
+			color: colors.purple
 		},
 
 		registerButton: {
 			alignItems: 'center',
 			marginTop: 20,
 			borderRadius: 5,
-			backgroundColor: colors.orange,
+			backgroundColor: colors.purple,
 			paddingVertical: 11,
 			width: width * 0.5,
 		},

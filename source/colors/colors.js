@@ -5,7 +5,8 @@ const colors = {
     lightBlue: '#03e8fc',
     orange: '#ff6a19',
     green: '#00e32d',
-    purple: '#ec17ff',
+    pink: '#ec17ff',
+    purple: '#7F007F',
     yellow: '#e5ff00'
 }
 
