@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
 
 		backgroundImage: {
 			width: width * 1,
-			height: height,
+			height: '100%',
 		},
 
     loginWrapper: {
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
       elevation: 5,
       borderRadius: 20,
       alignItems: 'center',
-      padding: 20
+      padding: 18
     },
 
     headerTitle: {
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
 			alignItems: 'center',
 			marginTop: 30,
 			paddingVertical: 10,
-			width: width * 0.5,
+			width: '100%',
 			borderRadius: 5,
 			borderWidth: 2,
 			borderColor: colors.purple
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
 			borderRadius: 5,
 			backgroundColor: colors.purple,
 			paddingVertical: 11,
-			width: width * 0.5,
+			width: '100%',
 		},
 
 		registerText: {

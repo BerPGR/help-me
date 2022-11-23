@@ -1,5 +1,5 @@
 import { Button, Keyboard, KeyboardAvoidingView, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import colors from '../colors/colors'
 import { firebase } from '../../firebaseConfig'
 
@@ -9,42 +9,69 @@ const Register = ({navigation}) => {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [username, setUsername] = useState('')
+	const [users, setUsers] = useState([])
 
 	const usersRef = firebase.firestore().collection('users')
 
-	const handleRegister = () => {
-		if (name && email && password && username) {
-			firebase.auth().createUserWithEmailAndPassword(email, password)
-			.then(userCredentials => {
-				const user = userCredentials.user
-				let date = new Date()
-				let registeredDate = (date.getFullYear() + '-' + ((date.getMonth())) + '-' + ((date.getDate())))
-				const data = {
-					name: name,
-					email: email,
-					password: password,
-					username: username,
-					registeredAt: registeredDate
-				}
-				usersRef
-				.add(data)
-				.then(() => {
-					setEmail('')
-					setPassword('')
-					setUsername('')
-					Keyboard.dismiss()
-					navigation.replace('Login')
+	useEffect(() => {
+		usersRef
+		.orderBy('registeredAt', 'asc')
+		.onSnapshot(querySnapchot => {
+			const users = []
+			querySnapchot.forEach(doc => {
+				const document = doc.data()
+				users.push({
+					id: doc.id,
+					document
 				})
-				.catch(error => alert(error))
-					alert('User created!')
 			})
-			.catch(error => { 
-				alert(error)
-				return
-			})
-		}
-		else {
-			alert('Check out for missing fields!')
+			setUsers(users)
+		})
+	}, [])
+
+
+	const handleRegister = () => {
+		for (let user of users) {
+			if (user.document.username == username) {
+				alert('This user already exist, try another!')
+				break
+			}
+			else{
+				if (name && email && password && username) {
+					firebase.auth().createUserWithEmailAndPassword(email, password)
+					.then(userCredentials => {
+						const user = userCredentials.user
+						let date = new Date()
+						let registeredDate = (date.getFullYear() + '-' + ((date.getMonth())) + '-' + ((date.getDate())))
+						const data = {
+							name: name,
+							email: email,
+							password: password,
+							username: username,
+							registeredAt: registeredDate
+						}
+						usersRef
+						.add(data)
+						.then(() => {
+							setEmail('')
+							setPassword('')
+							setUsername('')
+							Keyboard.dismiss()
+							navigation.replace('Login')
+						})
+						.catch(error => alert(error))
+							alert('User created!')
+					})
+					.catch(error => { 
+						alert(error)
+						return
+					})
+				}
+				else {
+					alert('Check out for missing fields!')
+				}
+				break
+			}
 		}
 	}
 

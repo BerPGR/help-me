@@ -1,5 +1,5 @@
-import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native'
 import React from 'react'
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native'
 import { firebase } from '../../firebaseConfig'
 import colors from '../colors/colors'
 import { Entypo, Feather } from '@expo/vector-icons'
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
 	},
 
 	headerWrapper: {
-		marginTop: 20,
+		marginTop: 40,
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'space-between'
