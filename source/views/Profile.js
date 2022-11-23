@@ -1,14 +1,15 @@
 import React from 'react'
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native'
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Alert, Image } from 'react-native'
 import { firebase } from '../../firebaseConfig'
 import colors from '../colors/colors'
 import { Entypo, Feather } from '@expo/vector-icons'
+import profilePic from '../images/blankProfile.png'
 
 const Profile = ({route, navigation}) => {
 
 	const userRef = firebase.firestore().collection('users')
-  const user = route.params.user
-	console.log(user)
+  const user = route.params.user.document
+
   return (
     <View style={styles.container}>
       
@@ -23,6 +24,14 @@ const Profile = ({route, navigation}) => {
 					</TouchableOpacity>
 				</View>
 			</SafeAreaView>
+
+			<View style={styles.profileDescription}>
+				<Text style={styles.userName}>Hey, {user.name}</Text>
+				<Image source={profilePic} style={styles.profilePicture}/>
+				<Text style={styles.infoText}>Name: {user.name}</Text>
+				<Text style={styles.infoText}>Email: {user.email}</Text>
+				<Text style={[styles.infoText, {marginBottom: 30}]}>Username: {user.username}</Text>
+			</View>
 
 			<TouchableOpacity style={styles.logOutButton} onPress={() => {
 				Alert.alert(
@@ -97,6 +106,32 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between'
 	},
 
+	profileDescription: {
+		marginTop: 20
+	},
+
+	userName: {
+		fontSize: 32,
+		color: colors.white,
+		fontWeight: 'bold',
+		marginBottom: 20
+	},
+
+	profilePicture: {
+		width: 128,
+		height: 128,
+		alignSelf: 'center',
+		borderRadius: 32,
+		marginBottom: 30
+	},
+
+	infoText: {
+		fontSize: 24,
+		color: colors.white,
+		fontWeight: 'bold',
+		marginTop: 10
+	},
+
 	logOutButton: {
 		width: '100%',
 		alignItems: 'center',
@@ -105,7 +140,7 @@ const styles = StyleSheet.create({
 		borderRadius: 15,
 		borderWidth: 2,
 		borderColor: colors.white,
-		marginTop: 15
+		marginTop: 20
 	},
 
 	logOutButtonText: {
