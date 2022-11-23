@@ -24,6 +24,17 @@ const Home = ({route, navigation}) => {
 					</TouchableOpacity>
 				</View>
     	</SafeAreaView>
+
+			<View styles={styles.listsWrapper}>
+				{user.document.lists.length == 0 
+					?
+					<TouchableOpacity onPress={() => navigation.navigate('CreateList')} style={styles.createListButton}>
+						<Text>Create MarketList</Text>
+					</TouchableOpacity>
+					:
+					<Text>bawsldyiugfsdilbg</Text>
+				}
+			</View>
 		</View>
   )
 }

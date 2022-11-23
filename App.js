@@ -4,6 +4,7 @@ import Home from "./source/views/Home";
 import Login from "./source/views/Login";
 import Profile from "./source/views/Profile";
 import Register from "./source/views/Register";
+import CreateList from "./source/views/CreateList";
 
 const Stack = createNativeStackNavigator()
 
@@ -14,6 +15,7 @@ export default function App() {
         <Stack.Screen name="Login" component={Login}/>
         <Stack.Screen name="Register" component={Register}/>
         <Stack.Screen name="Home" component={Home}/>
+        <Stack.Screen name="CreateList" component={CreateList}/>
         <Stack.Screen name="Profile" component={Profile}/>
       </Stack.Navigator>
     </NavigationContainer>

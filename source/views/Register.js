@@ -29,48 +29,59 @@ const Register = ({navigation}) => {
 		})
 	}, [])
 
+	const register = () => {
+		if (name && email && password && username) {
+			firebase.auth().createUserWithEmailAndPassword(email, password)
+			.then(userCredentials => {
+				const user = userCredentials.user
+				let date = new Date()
+				let registeredDate = (date.getFullYear() + '-' + ((date.getMonth())) + '-' + ((date.getDate())))
+				const data = {
+					name: name,
+					email: email,
+					password: password,
+					username: username,
+					lists: [],
+					registeredAt: registeredDate
+				}
+				usersRef
+				.add(data)
+				.then(() => {
+					setEmail('')
+					setPassword('')
+					setUsername('')
+					setName('')
+					Keyboard.dismiss()
+					navigation.replace('Login')
+				})
+				.catch(error => alert(error))
+					alert('User created!')
+			})
+			.catch(error => { 
+				alert(error => alert(error))
+				return
+			})
+		}
+		else {
+			alert('Check out for missing fields!')
+		}
+	}
 
 	const handleRegister = () => {
-		for (let user of users) {
-			if (user.document.username == username) {
-				alert('This user already exist, try another!')
+		for (let i = 0; i<=users.length; i++) {
+			if(users.length == 0) {
+				register()
 				break
 			}
-			else{
-				if (name && email && password && username) {
-					firebase.auth().createUserWithEmailAndPassword(email, password)
-					.then(userCredentials => {
-						const user = userCredentials.user
-						let date = new Date()
-						let registeredDate = (date.getFullYear() + '-' + ((date.getMonth())) + '-' + ((date.getDate())))
-						const data = {
-							name: name,
-							email: email,
-							password: password,
-							username: username,
-							registeredAt: registeredDate
-						}
-						usersRef
-						.add(data)
-						.then(() => {
-							setEmail('')
-							setPassword('')
-							setUsername('')
-							Keyboard.dismiss()
-							navigation.replace('Login')
-						})
-						.catch(error => alert(error))
-							alert('User created!')
-					})
-					.catch(error => { 
-						alert(error)
-						return
-					})
+			else {
+				if (users[i].document.username == username) {
+					alert('This user already exist, try another!')
+					break
 				}
-				else {
-					alert('Check out for missing fields!')
+				else{
+					register()
+					break
 				}
-				break
 			}
 		}
 	}
